@@ -8,13 +8,13 @@ import org.hibernate.validator.constraints.br.CPF
 
 
 data class CustomerDto(
-    @field:NotEmpty(message = "Field cannot be empty") val name: String,
-    @field:NotEmpty(message = "Field cannot be empty") val surName: String,
+    @field:NotEmpty(message = "Name is empty") val name: String,
+    @field:NotEmpty(message = "Surname is empty") val surName: String,
     @field:CPF(message = "CPF is invalid") val cpf: String,
     @field:Email(message = "Email is invalid") val email: String,
-    @field:NotEmpty(message = "Field cannot be empty") val password: String,
-    @field:NotEmpty(message = "Field cannot be empty") val zipCode: String,
-    @field:NotEmpty(message = "Field cannot be empty") val fullAddress: String
+    @field:NotEmpty(message = "Password is empty") val password: String,
+    @field:NotEmpty(message = "ZipCode is empty") val zipCode: String,
+    @field:NotEmpty(message = "Address is empty") val fullAddress: String
 
     ) {
 

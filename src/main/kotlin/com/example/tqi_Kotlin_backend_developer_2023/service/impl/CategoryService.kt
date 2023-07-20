@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service
 class CategoryService(
     private val categoryRepository: CategoryRepository
 ): ICategoryService {
+
     override fun save(category: Category): Category {
         return this.categoryRepository.save(category)
     }

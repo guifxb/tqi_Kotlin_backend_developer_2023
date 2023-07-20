@@ -13,7 +13,7 @@ interface IProductService {
 
     fun findAllByCategory(categoryId: Long): List<Product>
 
-    fun update(product: Product): Product
+    fun update(barcode: String, product: Product): Product
 
     fun deleteByBarcode(barcode: String)
 

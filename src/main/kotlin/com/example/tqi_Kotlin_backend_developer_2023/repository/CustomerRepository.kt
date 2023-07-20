@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query
 
 interface CustomerRepository: JpaRepository<Customer, Long>{
 
-
     @Query("SELECT * FROM customer WHERE cpf = ?1", nativeQuery = true)
     fun findByCpf(cpf: String): Customer?
 

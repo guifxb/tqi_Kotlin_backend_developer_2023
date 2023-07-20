@@ -1,0 +1,1 @@
+ALTER TABLE product Add CONSTRAINT uc_product_barcode UNIQUE (barcode)

@@ -89,6 +89,4 @@ class CustomerResource(
         this.customerService.deleteByCpf(cpf)
     }
 
-
-
 }

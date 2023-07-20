@@ -5,12 +5,13 @@ import jakarta.persistence.*
 @Entity
 @Table(name = "product")
 data class Product(
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
 
     @Column(nullable = false)
-    val barCode: String = "",
+    val barcode: String = "",
 
     @Column(nullable = false)
     var name: String = "",
@@ -26,5 +27,6 @@ data class Product(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
-    val category: Category?
+    var category: Category?
+
 )

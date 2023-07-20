@@ -16,7 +16,7 @@ import java.util.stream.Collectors
 
 
 @RestController
-@RequestMapping("/api/category")
+@RequestMapping("api/category")
 @Tag(name = "Category Controller")
 class CategoryResource(
     private val categoryService: CategoryService
@@ -39,7 +39,7 @@ class CategoryResource(
     }
 
     @GetMapping
-    @Operation(summary = "Search for category", description = "Get a list of all by name. Return empty list if not found.")
+    @Operation(summary = "Search for category", description = "Get a list of category by name. Return empty list if not found.")
     @ApiResponses(value = [
         ApiResponse(responseCode = "200", description = "Successful operation")
     ])
