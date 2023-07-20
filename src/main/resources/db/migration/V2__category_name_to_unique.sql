@@ -1,0 +1,1 @@
+ALTER TABLE category Add CONSTRAINT uc_category_name UNIQUE (name)

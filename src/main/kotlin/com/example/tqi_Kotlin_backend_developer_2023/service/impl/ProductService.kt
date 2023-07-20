@@ -1,6 +1,6 @@
 package com.example.tqi_Kotlin_backend_developer_2023.service.impl
 
-import com.example.tqi_Kotlin_backend_developer_2023.data.ProductRepository
+import com.example.tqi_Kotlin_backend_developer_2023.repository.ProductRepository
 import com.example.tqi_Kotlin_backend_developer_2023.domain.Product
 import com.example.tqi_Kotlin_backend_developer_2023.service.IProductService
 import org.springframework.stereotype.Service

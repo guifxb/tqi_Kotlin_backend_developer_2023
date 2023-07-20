@@ -10,7 +10,7 @@ interface ICustomerService {
 
     fun findByEmail(email: String): Customer?
 
-    fun deleteById(id: Long)
+    fun deleteByCpf(cpf: String)
 
 
 }

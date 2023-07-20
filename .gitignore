@@ -5,6 +5,15 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+diff --git a/data/pg_multixact/members/0000 b/data/pg_multixact/members/0000
+new file mode 100644
+index 0000000000000000000000000000000000000000..6d17cf9d15fb9f4a2358a2d079f3b8c755d005fa
+GIT binary patch
+literal 8192
+ec%1FQ0Sy2E0K%a6Pi+o2pa1{>00000fOi8R00031
+
+
+
 ### STS ###
 .apt_generated
 .classpath

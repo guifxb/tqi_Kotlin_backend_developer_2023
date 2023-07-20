@@ -1,6 +1,6 @@
 package com.example.tqi_Kotlin_backend_developer_2023.service.impl
 
-import com.example.tqi_Kotlin_backend_developer_2023.data.OrderItemRepository
+import com.example.tqi_Kotlin_backend_developer_2023.repository.OrderItemRepository
 import com.example.tqi_Kotlin_backend_developer_2023.domain.OrderItem
 import com.example.tqi_Kotlin_backend_developer_2023.service.IOrderItemService
 import org.springframework.stereotype.Service
