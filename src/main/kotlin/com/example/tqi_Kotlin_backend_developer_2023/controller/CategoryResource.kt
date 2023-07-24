@@ -30,7 +30,7 @@ class CategoryResource(
         )]
     )
     fun saveCategory(@RequestBody categoryDto: CategoryDto): ResponseEntity<CategoryDto> {
-        val category = this.categoryService.save(categoryDto.toEntity())
+        val category = categoryService.save(categoryDto.toEntity())
         val location = ServletUriComponentsBuilder.fromCurrentRequest()
             .path("/{id}")
             .buildAndExpand(category.id)
@@ -44,7 +44,7 @@ class CategoryResource(
         ApiResponse(responseCode = "200", description = "Successful operation")
     ])
     fun findByName(@RequestParam("name") name: String): ResponseEntity<List<CategoryView>> {
-        val list = this.categoryService.findByName(name).stream().map { category: Category -> CategoryView(category) }
+        val list = categoryService.findByName(name).stream().map { category: Category -> CategoryView(category) }
             .collect(Collectors.toList())
         return ResponseEntity.ok(list)
     }
@@ -59,7 +59,7 @@ class CategoryResource(
     )
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteById(@RequestParam("id") id: Long) {
-        this.categoryService.deleteById(id)
+        categoryService.deleteById(id)
     }
 
 }

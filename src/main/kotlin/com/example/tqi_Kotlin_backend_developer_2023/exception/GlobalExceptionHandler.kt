@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
 import java.sql.SQLIntegrityConstraintViolationException
 
 
@@ -31,13 +32,16 @@ class GlobalExceptionHandler {
         return ResponseEntity(errorMessage, HttpStatus.BAD_REQUEST)
     }
 
-    @ExceptionHandler(NotFoundException::class)
-    fun handleNoContentException(): ResponseEntity<String> {
-        return ResponseEntity("Resource ID not found.", HttpStatus.NOT_FOUND)
+    @ExceptionHandler(MethodArgumentTypeMismatchException::class)
+    fun handleMethodArgumentTypeMismatchException(ex: MethodArgumentTypeMismatchException): ResponseEntity<String> {
+        val errorMessage = "Bad request: ${ex.value}"
+        return ResponseEntity(errorMessage, HttpStatus.BAD_REQUEST)
     }
 
-
-
+    @ExceptionHandler(NotFoundException::class)
+    fun handleNoContentException(ex : NotFoundException): ResponseEntity<String> {
+        return ResponseEntity("Resource not found", HttpStatus.NOT_FOUND)
+    }
 }
 
 

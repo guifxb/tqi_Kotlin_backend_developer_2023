@@ -9,21 +9,18 @@ import org.springframework.stereotype.Service
 class OrderItemService(
     private val orderItemRepository: OrderItemRepository
 ): IOrderItemService {
-    override fun save(order: OrderItem): OrderItem {
-        return this.orderItemRepository.save(order)
+
+    override fun save(orderItem: OrderItem): OrderItem {
+        return orderItemRepository.save(orderItem)
     }
 
     override fun findById(id: Long): OrderItem? {
-        return this.orderItemRepository.findById(id).orElseThrow {
+        return orderItemRepository.findById(id).orElseThrow {
             RuntimeException("Item not found")
         }
     }
 
-    override fun findBySale(saleId: Long): List<OrderItem> {
-        return this.orderItemRepository.findBySaleId(saleId)
-    }
-
     override fun delete(order: OrderItem) {
-        return this.orderItemRepository.delete(order)
+        return orderItemRepository.delete(order)
     }
 }

@@ -12,20 +12,20 @@ class CustomerService(
 ): ICustomerService {
 
     override fun save(customer: Customer): Customer {
-        return this.customerRepository.save(customer)
+        return customerRepository.save(customer)
     }
 
     override fun findByCpf(cpf: String): Customer {
-        return this.customerRepository.findByCpf(cpf) ?: throw NotFoundException()
+        return customerRepository.findByCpf(cpf) ?: throw NotFoundException()
     }
 
     override fun findByEmail(email: String): Customer {
-       return this.customerRepository.findByEmail(email) ?: throw NotFoundException()
+       return customerRepository.findByEmail(email) ?: throw NotFoundException()
     }
 
     override fun deleteByCpf(cpf: String) {
-        val customer = this.findByCpf(cpf)
-        this.customerRepository.deleteById(customer.id)
+        val customer = findByCpf(cpf)
+        customerRepository.deleteById(customer.id)
     }
 
 }

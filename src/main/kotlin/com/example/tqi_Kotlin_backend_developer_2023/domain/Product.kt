@@ -29,4 +29,7 @@ data class Product(
     @JoinColumn(name = "category_id", nullable = false)
     var category: Category?
 
-)
+) {
+
+
+}

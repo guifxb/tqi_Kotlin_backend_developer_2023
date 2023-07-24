@@ -4,5 +4,5 @@ enum class PaymentOptions {
     CREDIT_CARD,
     DEBIT_CARD,
     PIX,
-    CASH
+    CASH;
 }

@@ -1,11 +1,12 @@
 package com.example.tqi_Kotlin_backend_developer_2023.domain
 
 import jakarta.persistence.*
+import java.time.LocalDateTime
 
 
 @Entity
 @Table(name = "sale")
-data class Sale(
+class Sale(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
@@ -21,13 +22,10 @@ data class Sale(
     val totalPrice: Double,
 
     @Column
-    val time: Long = System.currentTimeMillis(),
+    val time: LocalDateTime,
 
-    @ManyToMany
-    @JoinTable(
-        name = "sale_product_quantity",
-        joinColumns = [JoinColumn(name = "sale_id")],
-        inverseJoinColumns = [JoinColumn(name = "product_id")]
-    )
-    val products: List<OrderItem> = mutableListOf()
+    @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
+    @JoinColumn(name = "sale_id")
+    var orderItems: MutableList<OrderItem> = mutableListOf()
+
 )

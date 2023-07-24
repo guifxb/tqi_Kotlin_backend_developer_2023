@@ -13,7 +13,7 @@ class CategoryService(
 ): ICategoryService {
 
     override fun save(category: Category): Category {
-        return this.categoryRepository.save(category)
+        return categoryRepository.save(category)
     }
 
     override fun findByName(name: String): List<Category> {
@@ -22,10 +22,10 @@ class CategoryService(
 
     override fun deleteById(id: Long) {
         val cat = this.findById(id)
-        this.categoryRepository.deleteById(cat.id)
+        categoryRepository.deleteById(cat.id)
     }
 
     override fun findById(id: Long): Category {
-        return this.categoryRepository.findById(id).orElseThrow{ NotFoundException() }
+        return categoryRepository.findById(id).orElseThrow{ NotFoundException() }
     }
 }

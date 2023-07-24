@@ -1,37 +1,45 @@
 package com.example.tqi_Kotlin_backend_developer_2023.service.impl
 
-import com.example.tqi_Kotlin_backend_developer_2023.repository.SaleRepository
 import com.example.tqi_Kotlin_backend_developer_2023.domain.Sale
+import com.example.tqi_Kotlin_backend_developer_2023.repository.CustomerRepository
+import com.example.tqi_Kotlin_backend_developer_2023.repository.SaleRepository
 import com.example.tqi_Kotlin_backend_developer_2023.service.ISaleService
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
 
 @Service
 class SaleService(
-    private val saleRepository: SaleRepository
+    private val saleRepository: SaleRepository,
+    private val customerRepository: CustomerRepository
 ): ISaleService {
+
     override fun save(sale: Sale): Sale {
-        return this.saleRepository.save(sale)
+        return saleRepository.save(sale)
     }
 
-    override fun findById(id: Long): Sale? {
-        return this.saleRepository.findById(id).orElseThrow {
-            RuntimeException("Sale not found")
-        }
+    override fun findAll(): List<Sale> {
+        return saleRepository.findAll()
     }
 
-    override fun findByCustomer(customerId: Long): List<Sale> {
-        return this.findByCustomer(customerId)
+    override fun findById(id: Long): Sale {
+        return saleRepository.findById(id).orElseThrow { NotFoundException() }
     }
 
-    override fun findByTimeInterval(fromTime: Long, toTime: Long): List<Sale> {
-        return this.saleRepository.findByTimeInterval(fromTime, toTime)
+    override fun findByCustomer(cpf: String): List<Sale> {
+        val user = customerRepository.findByCpf(cpf) ?: throw NotFoundException()
+        return saleRepository.findAllByUserId(user.id)
+    }
+
+    override fun findByTimeInterval(fromTime: LocalDateTime, toTime: LocalDateTime): List<Sale> {
+        return saleRepository.findByTimeInterval(fromTime, toTime)
     }
 
     override fun findByPaymentOptions(paymentOptions: String): List<Sale> {
-        return this.saleRepository.findByPaymentOptions(paymentOptions)
+        return saleRepository.findByPaymentOptions(paymentOptions)
     }
 
     override fun delete(sale: Sale) {
-        this.saleRepository.deleteById(sale.id)
+        saleRepository.deleteById(sale.id)
     }
 }

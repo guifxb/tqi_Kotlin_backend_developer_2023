@@ -30,7 +30,7 @@ class CustomerResource(
         )]
     )
     fun saveCustomer(@RequestBody @Valid customerDto: CustomerDto): ResponseEntity<CustomerView> {
-        val customer = this.customerService.save(customerDto.toEntity())
+        val customer = customerService.save(customerDto.toEntity())
         val location = ServletUriComponentsBuilder.fromCurrentRequest()
             .path("/{id}")
             .buildAndExpand(customer.id)
@@ -45,7 +45,7 @@ class CustomerResource(
         ApiResponse(responseCode = "404", description = "Customer not found")
     ])
     fun findByCpf(@RequestParam("cpf") cpf: String): ResponseEntity<CustomerView?> {
-        val customer = this.customerService.findByCpf(cpf)
+        val customer = customerService.findByCpf(cpf)
         return ResponseEntity.ok(CustomerView(customer))
     }
 
@@ -56,7 +56,7 @@ class CustomerResource(
         ApiResponse(responseCode = "404", description = "Customer not found")
     ])
     fun findByEmail(@RequestParam("email") email: String): ResponseEntity<CustomerView?> {
-        val customer = this.customerService.findByEmail(email)
+        val customer = customerService.findByEmail(email)
         return ResponseEntity.ok(CustomerView(customer))
     }
 
@@ -72,9 +72,9 @@ class CustomerResource(
         @RequestParam("cpf") cpf: String,
         @RequestBody @Valid customerUpdateDto: CustomerUpdateDto
     ): ResponseEntity<CustomerView> {
-        val customer = this.customerService.findByCpf(cpf)
+        val customer = customerService.findByCpf(cpf)
         return ResponseEntity.status(HttpStatus.OK)
-            .body(CustomerView(this.customerService.save(customerUpdateDto.toEntity(customer))))
+            .body(CustomerView(customerService.save(customerUpdateDto.toEntity(customer))))
     }
 
     @DeleteMapping
@@ -86,7 +86,7 @@ class CustomerResource(
         ])
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun delete(@RequestParam("cpf") cpf: String) {
-        this.customerService.deleteByCpf(cpf)
+        customerService.deleteByCpf(cpf)
     }
 
 }

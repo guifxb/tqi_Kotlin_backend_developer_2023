@@ -32,7 +32,7 @@ class ProductResource(
         )]
     )
     fun saveProduct(@RequestBody @Valid productDto: ProductDto): ResponseEntity<ProductView> {
-        val product = this.productService.save(productDto.toEntity())
+        val product = productService.save(productDto.toEntity())
         val location = ServletUriComponentsBuilder.fromCurrentRequest()
             .path("/{id}")
             .buildAndExpand(product.id)
@@ -47,7 +47,7 @@ class ProductResource(
         ApiResponse(responseCode = "404", description = "Product not found")
     ])
     fun findByBarcode(@RequestParam("barcode") barcode: String): ResponseEntity<ProductView?> {
-        val product = this.productService.findByBarcode(barcode)
+        val product = productService.findByBarcode(barcode)
         return ResponseEntity.ok(ProductView(product))
     }
 
@@ -57,7 +57,7 @@ class ProductResource(
         ApiResponse(responseCode = "200", description = "Successful operation")
     ])
     fun findByName(@RequestParam("name") name: String): ResponseEntity<List<ProductView>> {
-        val list = this.productService.findByName(name).stream().map { product: Product -> ProductView(product) }
+        val list = productService.findByName(name).stream().map { product: Product -> ProductView(product) }
             .collect(Collectors.toList())
         return ResponseEntity.ok(list)
     }
@@ -70,7 +70,7 @@ class ProductResource(
     ])
     fun findByCategory(@RequestParam("category") categoryId: Long): ResponseEntity<List<ProductView>> {
         val list =
-            this.productService.findAllByCategory(categoryId).stream().map { product: Product -> ProductView(product) }
+            productService.findAllByCategory(categoryId).stream().map { product: Product -> ProductView(product) }
                 .collect(Collectors.toList())
         return ResponseEntity.ok(list)
     }
@@ -87,9 +87,9 @@ class ProductResource(
         @RequestParam("barcode") barcode: String,
         @RequestBody @Valid productUpdateDto: ProductUpdateDto
     ): ResponseEntity<ProductView> {
-        val product = this.productService.findByBarcode(barcode)
+        val product = productService.findByBarcode(barcode)
         return ResponseEntity.status(HttpStatus.OK)
-            .body(ProductView(this.productService.update(barcode, productUpdateDto.toEntity(product))))
+            .body(ProductView(productService.update(barcode, productUpdateDto.toEntity(product))))
     }
 
     @DeleteMapping
@@ -101,7 +101,7 @@ class ProductResource(
         )]
     )
     fun deleteProduct(@RequestParam("barcode") barcode: String) {
-        this.productService.deleteByBarcode(barcode)
+        productService.deleteByBarcode(barcode)
     }
 
 }

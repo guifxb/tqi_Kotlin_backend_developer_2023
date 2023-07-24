@@ -16,26 +16,26 @@ class ProductService(
         product.apply {
             category = categoryService.findById(product.category?.id!!)
         }
-        return this.productRepository.save(product)
+        return productRepository.save(product)
     }
 
     override fun findByName(name: String): List<Product> {
-        return this.productRepository.findByName(name)
+        return productRepository.findByName(name)
     }
 
     override fun findByBarcode(barcode: String): Product {
-        return this.productRepository.findByBarcode(barcode) ?: throw NotFoundException()
+        return productRepository.findByBarcode(barcode) ?: throw NotFoundException()
     }
 
     override fun findAllByCategory(categoryId: Long): List<Product> {
-        return this.productRepository.findAllByCategoryId(categoryId)
+        return productRepository.findAllByCategoryId(categoryId)
     }
 
     override fun update(barcode: String, product: Product): Product {
         if (product.barcode != barcode) {
             throw IllegalArgumentException("Id mismatch")
         }
-        val existingProduct = this.productRepository.findById(product.id).orElseThrow { NotFoundException() }
+        val existingProduct = productRepository.findById(product.id).orElseThrow { NotFoundException() }
 
         val updatedProduct = existingProduct.copy(
             name = product.name,
@@ -43,11 +43,11 @@ class ProductService(
             price = product.price,
             stock = product.stock
         )
-        return this.save(updatedProduct)
+        return save(updatedProduct)
     }
 
     override fun deleteByBarcode(barcode: String) {
-        val product = this.findByBarcode(barcode)
-        this.productRepository.deleteById(product.id)
+        val product = findByBarcode(barcode)
+        productRepository.deleteById(product.id)
     }
 }
