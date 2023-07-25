@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
+import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -23,7 +24,7 @@ class ShoppingCartResource(
     @PostMapping
     @Operation(summary = "Checkout", description = "Checkout the sale, asking for user CPF and payment method. This also register the sale and clears the cart.")
     @ApiResponses(value = [
-        ApiResponse(responseCode = "200", description = "Sale created successfully"), //tem q ver se é essas mesmo pq olha
+        ApiResponse(responseCode = "200", description = "Sale created successfully"),
         ApiResponse(responseCode = "400", description = "Bad Request"
         )]
     )
@@ -48,7 +49,7 @@ class ShoppingCartResource(
     @ApiResponses(value = [
         ApiResponse(responseCode = "204", description = "Shopping cart updated successfully"),
     ])
-    fun updateShoppingCart(@RequestBody orderItemDto: OrderItemDto): ResponseEntity<ShoppingCartView> {
+    fun updateShoppingCart(@RequestBody @Valid orderItemDto: OrderItemDto): ResponseEntity<ShoppingCartView> {
         val orderItem = orderItemDto.toEntity()
         val cart = shoppingCartService.addToCart(orderItem.barcode, orderItem.quantity)
         return ResponseEntity.ok(ShoppingCartView(cart))
@@ -63,11 +64,5 @@ class ShoppingCartResource(
         val cart = shoppingCartService.removeFromCart(id)
         return ResponseEntity.ok(ShoppingCartView(cart))
     }
-
-
-
-
-
-
 
 }

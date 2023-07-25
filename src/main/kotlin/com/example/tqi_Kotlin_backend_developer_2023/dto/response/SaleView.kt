@@ -1,13 +1,15 @@
 package com.example.tqi_Kotlin_backend_developer_2023.dto.response
 
 import com.example.tqi_Kotlin_backend_developer_2023.domain.*
+import java.math.BigDecimal
+import java.math.RoundingMode
 import java.time.LocalDateTime
 
 class SaleView(
     val id: Long,
     val products: List<ProductView>,
     val productQuantity: Int,
-    val totalPrice: String,
+    val totalPrice: BigDecimal,
     val paymentOptions: PaymentOptions,
     val customerCpf: String,
     val time: LocalDateTime
@@ -21,12 +23,12 @@ class SaleView(
                 name = it.product.name,
                 quantity = it.quantity,
                 unit = it.product.measurementUnit,
-                priceUnit = "%.2f".format(it.product.price),
-                priceTotal = "%.2f".format(it.product.price * it.quantity)
+                priceUnit = it.product.price.setScale(2, RoundingMode.HALF_EVEN),
+                priceTotal = (it.product.price * BigDecimal.valueOf(it.quantity)).setScale(2, RoundingMode.HALF_EVEN)
             )
         },
         productQuantity = sale.orderItems.size,
-        totalPrice = "%.2f".format(sale.orderItems.sumOf { it.product.price * it.quantity }),
+        totalPrice = (sale.orderItems.sumOf { it.product.price * BigDecimal.valueOf(it.quantity) }).setScale(2, RoundingMode.HALF_EVEN),
         customerCpf = sale.customer?.cpf ?: "",
         paymentOptions = sale.paymentOptions,
         time = sale.time
@@ -38,7 +40,7 @@ class SaleView(
         val name: String,
         val quantity: Double,
         val unit: MeasurementUnit,
-        val priceUnit: String,
-        val priceTotal: String,
+        val priceUnit: BigDecimal,
+        val priceTotal: BigDecimal,
     )
 }

@@ -1,10 +1,10 @@
 package com.example.tqi_Kotlin_backend_developer_2023.service.impl
 
 import com.example.tqi_Kotlin_backend_developer_2023.domain.*
-import com.example.tqi_Kotlin_backend_developer_2023.repository.OrderItemRepository
 import com.example.tqi_Kotlin_backend_developer_2023.service.IShoppingCartService
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
 import org.springframework.stereotype.Service
+import java.math.BigDecimal
 import java.time.LocalDateTime
 
 @Service
@@ -12,7 +12,8 @@ class ShoppingCartService(
     private val productService: ProductService,
     private val saleService: SaleService,
     private val customerService: CustomerService,
-    private val shoppingCart: ShoppingCart = ShoppingCart(), private val orderItemRepository: OrderItemRepository
+    private val orderItemService: OrderItemService,
+    private val shoppingCart: ShoppingCart = ShoppingCart()
 ): IShoppingCartService {
 
     override fun getShoppingCart(): ShoppingCart {
@@ -36,9 +37,9 @@ class ShoppingCartService(
         return shoppingCart
     }
 
-    override fun calculateTotalPrice(): Double {
+    override fun calculateTotalPrice(): BigDecimal {
         // Apply discount logic here, if any
-        return shoppingCart.orderItems.sumOf { it.product.price * it.quantity }
+        return shoppingCart.orderItems.sumOf { it.product.price * BigDecimal.valueOf(it.quantity) }
     }
 
     override fun checkout(cpf: String?, paymentOptions: PaymentOptions): Sale {
@@ -70,7 +71,7 @@ class ShoppingCartService(
             val orderBarcode = orderItem.product.barcode
             val newStock = productService.findByBarcode(orderBarcode).stock
             productService.update(orderBarcode, orderItem.product.copy(stock = newStock - orderItem.quantity))
-            orderItemRepository.save(orderItem)
+            orderItemService.save(orderItem)
         }
         sale.orderItems = productsCopy
         shoppingCart.orderItems.clear()

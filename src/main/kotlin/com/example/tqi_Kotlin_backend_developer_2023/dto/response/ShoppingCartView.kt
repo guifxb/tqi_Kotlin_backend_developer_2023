@@ -2,11 +2,13 @@ package com.example.tqi_Kotlin_backend_developer_2023.dto.response
 
 import com.example.tqi_Kotlin_backend_developer_2023.domain.MeasurementUnit
 import com.example.tqi_Kotlin_backend_developer_2023.domain.ShoppingCart
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 
 data class ShoppingCartView(
     val products: List<ProductView>,
-    val totalPrice: String,
+    val totalPrice: BigDecimal,
     val productQuantity: Int
 ) {
     constructor(shoppingCart: ShoppingCart) : this(
@@ -17,12 +19,12 @@ data class ShoppingCartView(
                 name = it.product.name,
                 quantity = it.quantity,
                 unit = it.product.measurementUnit,
-                priceUnit = "%.2f".format(it.product.price),
-                priceTotal = "%.2f".format(it.product.price * it.quantity)
+                priceUnit = it.product.price.setScale(2, RoundingMode.HALF_EVEN),
+                priceTotal = (it.product.price * BigDecimal.valueOf(it.quantity)).setScale(2, RoundingMode.HALF_EVEN)
             )
         },
         productQuantity = shoppingCart.orderItems.size,
-        totalPrice = "%.2f".format(shoppingCart.orderItems.sumOf { it.product.price * it.quantity }),
+        totalPrice = (shoppingCart.orderItems.sumOf { it.product.price * BigDecimal.valueOf(it.quantity) }).setScale(2, RoundingMode.HALF_EVEN),
     )
 
     data class ProductView(
@@ -31,7 +33,7 @@ data class ShoppingCartView(
         val name: String,
         val quantity: Double,
         val unit: MeasurementUnit,
-        val priceUnit: String,
-        val priceTotal: String,
+        val priceUnit: BigDecimal,
+        val priceTotal: BigDecimal,
         )
 }

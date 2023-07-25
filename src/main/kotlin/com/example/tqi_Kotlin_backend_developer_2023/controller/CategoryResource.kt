@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -29,7 +30,7 @@ class CategoryResource(
         ApiResponse(responseCode = "422", description = "Invalid request"
         )]
     )
-    fun saveCategory(@RequestBody categoryDto: CategoryDto): ResponseEntity<CategoryDto> {
+    fun saveCategory(@RequestBody @Valid categoryDto: CategoryDto): ResponseEntity<CategoryDto> {
         val category = categoryService.save(categoryDto.toEntity())
         val location = ServletUriComponentsBuilder.fromCurrentRequest()
             .path("/{id}")

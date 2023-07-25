@@ -1,6 +1,7 @@
 package com.example.tqi_Kotlin_backend_developer_2023.domain
 
 import jakarta.persistence.*
+import java.math.BigDecimal
 import java.time.LocalDateTime
 
 
@@ -19,7 +20,7 @@ class Sale(
     val paymentOptions: PaymentOptions,
 
     @Column
-    val totalPrice: Double,
+    val totalPrice: BigDecimal,
 
     @Column
     val time: LocalDateTime,

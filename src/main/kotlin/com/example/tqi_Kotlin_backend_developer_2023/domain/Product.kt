@@ -1,6 +1,7 @@
 package com.example.tqi_Kotlin_backend_developer_2023.domain
 
 import jakarta.persistence.*
+import java.math.BigDecimal
 
 @Entity
 @Table(name = "product")
@@ -20,10 +21,10 @@ data class Product(
     var measurementUnit: MeasurementUnit,
 
     @Column(nullable = false)
-    var price: Double = 0.0,
+    var price: BigDecimal = BigDecimal.ZERO,
 
     @Column(nullable = false)
-    var stock : Double = 0.0,
+    var stock: Double = 0.0,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
